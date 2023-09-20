@@ -32,7 +32,7 @@ export class XmlService {
           const formData = new FormData();
           formData.append('file', new Blob([xmlComPrecoMedioCoberto], { type: 'application/xml' }), xml.name);
 
-          return this.http.post('http://localhost:8080/xml', formData).subscribe(
+          return this.http.post('http://localhost:8080/api/agente', formData).subscribe(
             (response: any) => {              
               observer.next(response);
               observer.complete(); 
