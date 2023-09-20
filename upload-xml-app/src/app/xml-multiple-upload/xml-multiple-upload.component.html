@@ -1,0 +1,38 @@
+<!-- -->
+<mat-toolbar color="primary">
+  <span>Selecione o arquivo xml</span>
+</mat-toolbar>
+
+<br />
+<div>
+  <input type="file" accept=".xml" (change)="onFileSelected($event)" multiple mat-raised-button 
+    color="primary"
+    class="fileInput">
+</div>
+
+<div *ngIf="xmls.length > 0">
+  <mat-table [dataSource]="xmls">
+    <ng-container matColumnDef="nomeDoArquivo">
+      <mat-header-cell *matHeaderCellDef> Nome do Arquivo </mat-header-cell>
+      <mat-cell *matCellDef="let file"> {{ file.name }} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="tipoDeArquivo">
+      <mat-header-cell *matHeaderCellDef> Tipo de Arquivo </mat-header-cell>
+      <mat-cell *matCellDef="let file"> {{ file.type }} </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="tamanho">
+      <mat-header-cell *matHeaderCellDef> Tamanho (KB) </mat-header-cell>
+      <mat-cell *matCellDef="let file"> {{ file.size / 1024 }} </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="['nomeDoArquivo', 'tipoDeArquivo', 'tamanho']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['nomeDoArquivo', 'tipoDeArquivo', 'tamanho']"></mat-row>
+  </mat-table>
+</div>
+
+<br />
+<button mat-raised-button color="primary" (click)="submit()">Enviar</button>
+
+<app-loading *ngIf="loadingService.isLoading$ | async"></app-loading>
